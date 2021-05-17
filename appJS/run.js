@@ -1,9 +1,12 @@
 'use strict';
 let attempts = 0;
-let maxAttmpts =10;
+let maxAttmpts = 10;
 
 
 let mall = [];
+let nameOfImge = [];
+let busClicks = [];
+let busviews = [];
 function busMall(busName) {
 
     this.busName = busName.split('.')[0];
@@ -11,14 +14,16 @@ function busMall(busName) {
     this.clicks = 0;
     this.views = 0;
     mall.push(this);
+    nameOfImge.push(this.busName);
 
 }
 
-let mallImages = ['bag.jpg', 'banana.jpg', 'bathroom.jpg', 'boots.jpg', 'breakfast.jpg', 'bubblegum.jpg', 'chair.jpg', 'cthulhu.jpg',
-    'dog-duck.jpg', 'dragon.jpg', 'pen.jpg', 'pet-sweep.jpg', 'scissors.jpg', 'shark.jpg',
-    'sweep.png', 'tauntaun.jpg', 'unicorn.jpg', 'water-can.jpg', 'wine-glass.jpg'];
+let mallImages = [
+    'bag.jpg','banana.jpg','bathroom.jpg','boots.jpg','breakfast.jpg','bubblegum.jpg','chair.jpg','cthulhu.jpg',
+    'dog-duck.jpg','dragon.jpg','pen.jpg','pet-sweep.jpg','scissors.jpg','shark.jpg','sweep.png','tauntaun.jpg'
+    ,'unicorn.jpg','water-can.jpg','wine-glass.jpg'];
 
-for (let i = 0; i <mallImages.length; i++) {
+for (let i = 0; i < mallImages.length; i++) {
 
     new busMall(mallImages[i])
 }
@@ -44,15 +49,9 @@ function renderImg() {
     rightImgIndex = gernartImage();
     lastImgIndex = gernartImage();
 
-    while (leftImgIndex === rightImgIndex || lastImgIndex===rightImgIndex ||leftImgIndex===lastImgIndex ) {
+    while (leftImgIndex === rightImgIndex || lastImgIndex === rightImgIndex || leftImgIndex === lastImgIndex) {
         leftImgIndex = gernartImage();
         rightImgIndex = gernartImage();
-        
-        
-
-
-
-
     }
 
     firstImg.setAttribute('src', mall[leftImgIndex].source);
@@ -73,10 +72,10 @@ lastImg.addEventListener('click', userClick);
 
 function userClick(event) {
     attempts++;
-   
 
-    
-    if ( attempts <= maxAttmpts) {
+
+
+    if (attempts <= maxAttmpts) {
 
         if (event.target.id === 'firstImg') {
             mall[leftImgIndex].clicks++;
@@ -89,36 +88,75 @@ function userClick(event) {
         }
 
         renderImg();
+    }
 
-    } 
-    
     let buttom = document.getElementById('go');
-    buttom.addEventListener('click',resulatS)
+    buttom.addEventListener('click', resulatS)
 
-    
     function resulatS(event) {
 
         let ulEl = document.getElementById('results');
         let LiEl;
 
-        for (let i = 0; i < mall.length; i++) {
+        for (let j = 0; j < mall.length; j++) {
             LiEl = document.createElement('li');
             ulEl.appendChild(LiEl);
-            LiEl.textContent = `${mall[i].busName} had ${mall[i].clicks} votes, and was seen ${mall[i].views} times`
-
-
+            LiEl.textContent = `${mall[j].busName} had ${mall[j].clicks} votes, and was seen ${mall[j].views} times`
+            busClicks.push(mall[j].clicks);
+            busviews.push(mall[j].views)
         }
+
         firstImg.removeEventListener('click', userClick);
         secondImg.removeEventListener('click', userClick);
         lastImg.removeEventListener('click', userClick);
 
+        chartrender();
 
-        
     }
-     
-
-        
-    
 
 }
 
+function chartrender() {
+
+
+    var ctx = document.getElementById('myChart').getContext('2d');
+    var myChart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: nameOfImge,
+            datasets: [{
+                label: '# of views',
+                data: busviews,
+                backgroundColor: [
+                    'rgba(255, 99, 132, 0.2)',
+                  
+                ],
+                borderColor: [
+                    'rgba(255, 99, 132, 1)',
+                   
+                ],
+                borderWidth: 1
+            }, {
+                label: '# of clicks',
+                data: busClicks,
+                backgroundColor: [
+                    
+                    'rgba(255, 159, 64, 0.2)'
+                ],
+                borderColor: [
+                    
+                    'rgba(255, 159, 64, 1)'
+                ],
+                borderWidth: 1
+            }]
+
+        },
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            }
+        }
+    });
+}
