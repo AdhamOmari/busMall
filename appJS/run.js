@@ -1,7 +1,7 @@
 'use strict';
 let attempts = 0;
-let maxAttmpts = 2;
-// let numberOfAttempt = prompt ('enter');
+let maxAttmpts =10;
+
 
 let mall = [];
 function busMall(busName) {
@@ -18,7 +18,7 @@ let mallImages = ['bag.jpg', 'banana.jpg', 'bathroom.jpg', 'boots.jpg', 'breakfa
     'dog-duck.jpg', 'dragon.jpg', 'pen.jpg', 'pet-sweep.jpg', 'scissors.jpg', 'shark.jpg',
     'sweep.png', 'tauntaun.jpg', 'unicorn.jpg', 'water-can.jpg', 'wine-glass.jpg'];
 
-for (let i = 0; i < mallImages.length; i++) {
+for (let i = 0; i <mallImages.length; i++) {
 
     new busMall(mallImages[i])
 }
@@ -44,9 +44,13 @@ function renderImg() {
     rightImgIndex = gernartImage();
     lastImgIndex = gernartImage();
 
-    while (leftImgIndex === rightImgIndex && lastImgIndex === leftImgIndex && lastImgIndex === rightImgIndex) {
-        lastImgIndex = gernartImage();
-        lastImgIndex = gernartImage();
+    while (leftImgIndex === rightImgIndex || lastImgIndex===rightImgIndex ||leftImgIndex===lastImgIndex ) {
+        leftImgIndex = gernartImage();
+        rightImgIndex = gernartImage();
+        
+        
+
+
 
 
     }
@@ -66,9 +70,11 @@ firstImg.addEventListener('click', userClick);
 secondImg.addEventListener('click', userClick);
 lastImg.addEventListener('click', userClick);
 
+
 function userClick(event) {
     attempts++;
    
+
     
     if ( attempts <= maxAttmpts) {
 
