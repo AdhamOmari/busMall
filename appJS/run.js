@@ -38,7 +38,6 @@ for (let i = 0; i < mallImages.length; i++) {
 function gernartImage() {
     return Math.floor(Math.random() * mall.length);
 }
-
 let firstImg = document.getElementById('firstImg');
 let secondImg = document.getElementById('secondImg');
 let lastImg = document.getElementById('lastImg');
@@ -55,6 +54,11 @@ function renderImg() {
     rightImgIndex = gernartImage();
     lastImgIndex = gernartImage();
 
+    let busArray = mall[0];
+    let busChekedImag = mall[1];
+    while (busArray === busChekedImag) {
+        generateImage();
+    }
     while (leftImgIndex === rightImgIndex || lastImgIndex === rightImgIndex || leftImgIndex === lastImgIndex) {
         leftImgIndex = gernartImage();
         rightImgIndex = gernartImage();
@@ -87,6 +91,7 @@ function userClick(event) {
         else if (event.target.id === 'secondImg') {
 
             mall[rightImgIndex].clicks++;
+
         }
 
         else if (event.target.id === 'lastImg') {
@@ -97,6 +102,10 @@ function userClick(event) {
 
     }
 }
+
+    
+
+
 
 let buttom = document.getElementById('go');
 buttom.addEventListener('click', resulatS);
@@ -117,55 +126,55 @@ function resulatS(event) {
     firstImg.removeEventListener('click', userClick);
     secondImg.removeEventListener('click', userClick);
     lastImg.removeEventListener('click', userClick);
-    // chartrender()
+     chartrender()
 }
 
 
 
-// function chartrender() {
+function chartrender() {
 
 
-//     var ctx = document.getElementById('myChart').getContext('2d');
-//     var myChart = new Chart(ctx, {
-//         type: 'bar',
-//         data: {
-//             labels: nameOfImge,
-//             datasets: [{
-//                 label: '# of views',
-//                 data: busviews,
-//                 backgroundColor: [
-//                     'rgba(255, 99, 132, 0.2)',
+    var ctx = document.getElementById('myChart').getContext('2d');
+    var myChart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: nameOfImge,
+            datasets: [{
+                label: '# of views',
+                data: busviews,
+                backgroundColor: [
+                    'rgba(255, 99, 132, 0.2)',
 
-//                 ],
-//                 borderColor: [
-//                     'rgba(255, 99, 132, 1)',
+                ],
+                borderColor: [
+                    'rgba(255, 99, 132, 1)',
 
-//                 ],
-//                 borderWidth: 1
-//             }, {
-//                 label: '# of clicks',
-//                 data: busClicks,
-//                 backgroundColor: [
+                ],
+                borderWidth: 1
+            }, {
+                label: '# of clicks',
+                data: busClicks,
+                backgroundColor: [
 
-//                     'rgba(255, 159, 64, 0.2)'
-//                 ],
-//                 borderColor: [
+                    'rgba(255, 159, 64, 0.2)'
+                ],
+                borderColor: [
 
-//                     'rgba(255, 159, 64, 1)'
-//                 ],
-//                 borderWidth: 1
-//             }]
+                    'rgba(255, 159, 64, 1)'
+                ],
+                borderWidth: 1
+            }]
 
-//         },
-//         options: {
-//             scales: {
-//                 y: {
-//                     beginAtZero: true
-//                 }
-//             }
-//         }
-//     });
-// }
+        },
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            }
+        }
+    });
+}
 
 
 
