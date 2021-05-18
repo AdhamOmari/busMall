@@ -55,6 +55,15 @@ function renderImg() {
     rightImgIndex = gernartImage();
     lastImgIndex = gernartImage();
 
+    let busArray = mall[0];
+    let busChekedImag = mall[1];
+    while (busArray === busChekedImag) {
+        generateImage();
+    }
+
+
+
+
     while (leftImgIndex === rightImgIndex || lastImgIndex === rightImgIndex || leftImgIndex === lastImgIndex) {
         leftImgIndex = gernartImage();
         rightImgIndex = gernartImage();
@@ -111,58 +120,59 @@ function resulatS(event) {
         LiEl.textContent = `${mall[j].busName} had ${mall[j].clicks} votes, and was seen ${mall[j].views} times`
         busClicks.push(mall[j].clicks);
         busviews.push(mall[j].views)
-        banana had 3 votes, and was seen 5 times.
     }
 
     firstImg.removeEventListener('click', userClick);
     secondImg.removeEventListener('click', userClick);
     lastImg.removeEventListener('click', userClick);
+    // chartrender();
+
+
 }
-chartrender();
 
 
 
-// function chartrender() {
+    // function chartrender() {
 
 
-//     var ctx = document.getElementById('myChart').getContext('2d');
-//     var myChart = new Chart(ctx, {
-//         type: 'bar',
-//         data: {
-//             labels: nameOfImge,
-//             datasets: [{
-//                 label: '# of views',
-//                 data: busviews,
-//                 backgroundColor: [
-//                     'rgba(255, 99, 132, 0.2)',
+    //     var ctx = document.getElementById('myChart').getContext('2d');
+    //     var myChart = new Chart(ctx, {
+    //         type: 'bar',
+    //         data: {
+    //             labels: nameOfImge,
+    //             datasets: [{
+    //                 label: '# of views',
+    //                 data: busviews,
+    //                 backgroundColor: [
+    //                     'rgba(255, 99, 132, 0.2)',
 
-//                 ],
-//                 borderColor: [
-//                     'rgba(255, 99, 132, 1)',
+    //                 ],
+    //                 borderColor: [
+    //                     'rgba(255, 99, 132, 1)',
 
-//                 ],
-//                 borderWidth: 1
-//             }, {
-//                 label: '# of clicks',
-//                 data: busClicks,
-//                 backgroundColor: [
+    //                 ],
+    //                 borderWidth: 1
+    //             }, {
+    //                 label: '# of clicks',
+    //                 data: busClicks,
+    //                 backgroundColor: [
 
-//                     'rgba(255, 159, 64, 0.2)'
-//                 ],
-//                 borderColor: [
+    //                     'rgba(255, 159, 64, 0.2)'
+    //                 ],
+    //                 borderColor: [
 
-//                     'rgba(255, 159, 64, 1)'
-//                 ],
-//                 borderWidth: 1
-//             }]
+    //                     'rgba(255, 159, 64, 1)'
+    //                 ],
+    //                 borderWidth: 1
+    //             }]
 
-//         },
-//         options: {
-//             scales: {
-//                 y: {
-//                     beginAtZero: true
-//                 }
-//             }
-//         }
-//     });
-// }
+    //         },
+    //         options: {
+    //             scales: {
+    //                 y: {
+    //                     beginAtZero: true
+    //                 }
+    //             }
+    //         }
+    //     });
+    // }
