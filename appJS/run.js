@@ -104,6 +104,7 @@ function userClick(event) {
     }
 }
 
+
 let buttom = document.getElementById('go');
 buttom.addEventListener('click', resulatS)
 
@@ -127,7 +128,7 @@ function resulatS(event) {
 }
 
 
-
+    
 
     function chartrender() {
         var ctx = document.getElementById('myChart').getContext('2d');
@@ -171,3 +172,5 @@ function resulatS(event) {
             }
         });
     }
+
+
