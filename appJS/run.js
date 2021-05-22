@@ -1,18 +1,12 @@
 'use strict';
 let attempts = 0;
-let maxAttmpts = 0;
-let userEnter = prompt('maxAttmpts')
-if (userEnter > 25) {
-    maxAttmpts = 25;
-}
-else if (userEnter < 25) {
-    maxAttmpts = userEnter;
-}
-
+let maxAttmpts = 5;
 let mall = [];
 let nameOfImge = [];
 let busClicks = [];
 let busviews = [];
+
+
 function busMall(busName) {
 
     this.busName = busName.split('.')[0];
@@ -21,7 +15,6 @@ function busMall(busName) {
     this.views = 0;
     mall.push(this);
     nameOfImge.push(this.busName);
-
 }
 
 let mallImages = [
@@ -82,9 +75,12 @@ secondImg.addEventListener('click', userClick);
 lastImg.addEventListener('click', userClick);
 
 
+let attm = document.getElementById('attemp');
+attm.textContent = attempts;
+
 function userClick(event) {
     attempts++;
-
+    console.log(attempts);
     if (attempts <= maxAttmpts) {
 
         if (event.target.id === 'firstImg') {
@@ -98,15 +94,28 @@ function userClick(event) {
         else if (event.target.id === 'lastImg') {
             mall[lastImgIndex].clicks++;
         }
-
+        event.preventDefault();
         renderImg();
+        attm.textContent = attempts;
 
     }
+    else {
+
+        let btn = document.createElement('button');
+        buttom.appendChild(btn);
+        btn.textContent = 'view result';
+
+        buttom.addEventListener('click', resulatS);
+        firstImg.removeEventListener('click', userClick);
+        secondImg.removeEventListener('click', userClick);
+        lastImg.removeEventListener('click', userClick);
+    }
+    sittingItems();
+
 }
 
-
 let buttom = document.getElementById('go');
-buttom.addEventListener('click', resulatS)
+
 
 function resulatS(event) {
 
@@ -120,57 +129,77 @@ function resulatS(event) {
         busviews.push(mall[j].views)
     }
 
-    firstImg.removeEventListener('click', userClick);
-    secondImg.removeEventListener('click', userClick);
-    lastImg.removeEventListener('click', userClick);
     chartrender();
+    buttom.removeEventListener('click', resulatS);
 
 }
 
 
-    
+function sittingItems() {
+    let date = JSON.stringify(mall);
+    localStorage.setItem('buss', date);
 
-    function chartrender() {
-        var ctx = document.getElementById('myChart').getContext('2d');
-        var myChart = new Chart(ctx, {
-            type: 'bar',
-            data: {
-                labels: nameOfImge,
-                datasets: [{
-                    label: '# of views',
-                    data: busviews,
-                    backgroundColor: [
-                        'rgba(255, 99, 132, 0.2)',
 
-                    ],
-                    borderColor: [
-                        'rgba(255, 99, 132, 3)',
+}
 
-                    ],
-                    borderWidth: 1
-                }, {
-                    label: '# of clicks',
-                    data: busClicks,
-                    backgroundColor: [
+function gettingItems() {
 
-                        'rgba(255, 159, 64, 0.2)'
-                    ],
-                    borderColor: [
+    let stringobj = localStorage.getItem('buss');
 
-                        'rgba(255, 159, 64, 1)'
-                    ],
-                    borderWidth: 1
-                }]
-
-            },
-            options: {
-                scales: {
-                    y: {
-                        beginAtZero: true
-                    }
-                }
-            }
-        });
+    let normalBuss = JSON.parse(stringobj);
+   
+    if (stringobj !== null) {
+        mall = normalBuss;
     }
 
 
+    renderImg();
+
+
+}
+
+
+function chartrender() {
+    var ctx = document.getElementById('myChart').getContext('2d');
+    var myChart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: nameOfImge,
+            datasets: [{
+                label: '# of views',
+                data: busviews,
+                backgroundColor: [
+                    'rgba(255, 99, 132, 0.2)',
+
+                ],
+                borderColor: [
+                    'rgba(255, 99, 132, 3)',
+
+                ],
+                borderWidth: 1
+            }, {
+                label: '# of clicks',
+                data: busClicks,
+                backgroundColor: [
+
+                    'rgba(255, 159, 64, 0.2)'
+                ],
+                borderColor: [
+
+                    'rgba(255, 159, 64, 1)'
+                ],
+                borderWidth: 1
+            }]
+
+        },
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            }
+        }
+    });
+}
+
+gettingItems();
